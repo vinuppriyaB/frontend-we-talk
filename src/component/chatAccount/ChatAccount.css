@@ -1,0 +1,9 @@
+.myAccount {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.otherAccount {
+  display: flex;
+  flex-direction: column;
+}

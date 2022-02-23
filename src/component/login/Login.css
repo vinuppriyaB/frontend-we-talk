@@ -1,0 +1,9 @@
+.login_container {
+  margin-top: 100px;
+  background-color: thistle;
+}
+.Login_fields {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
