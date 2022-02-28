@@ -193,21 +193,20 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     fetchAllMessage();
     selectedChatCompare = selectedChat;
   }, [selectedChat]);
-  useEffect(() => {
-    socket.on("message received", (newMessageReceived) => {
+
+  socket.on("message received", (newMessageReceived) => {
+    console.log(message);
+    console.log(newMessageReceived);
+    console.log("newMessageReceived" + newMessageReceived);
+    if (
+      !selectedChatCompare ||
+      selectedChatCompare._id !== newMessageReceived.chat._id
+    ) {
+    } else {
       console.log(message);
       console.log(newMessageReceived);
-      console.log("newMessageReceived" + newMessageReceived);
-      if (
-        !selectedChatCompare ||
-        selectedChatCompare._id !== newMessageReceived.chat._id
-      ) {
-      } else {
-        console.log(message);
-        console.log(newMessageReceived);
-        setMessage([...message, newMessageReceived]);
-      }
-    });
+      setMessage([...message, newMessageReceived]);
+    }
   });
 
   const handleSendMessage = async (e) => {
