@@ -10,12 +10,18 @@
 }
 .content_wrapper {
   display: flex;
-  align-items: center;
+  /* width: 100%; */
+  /* align-items: center; */
 }
 .chatAccount_wrapper {
-  flex: 1;
-  background-color: wheat;
+  flex: 2 !important;
+  min-width: 300px;
+  /* background-color: wheat; */
 }
 .chatBox_wrapper {
-  flex: 2;
+  flex: 1 !important;
+  /* background-color: rgb(204, 240, 252); */
+  background-color: wheat;
+  min-height: 100vh !important;
+  /* width: 100%; */
 }

@@ -1,0 +1,6 @@
+.ChatBox_container {
+  display: flex;
+  min-height: 96vh;
+  width: 100%;
+  background-color: rgb(247, 232, 206);
+}

@@ -1,9 +1,30 @@
 .myAccount {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 30px;
 }
 .otherAccount {
   display: flex;
   flex-direction: column;
+}
+
+.createChat_modal {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.selecteduser_container {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.chatAccount_list {
+  padding: 10px;
+}
+.createGroupbtn {
+  background-color: orangered !important;
+  color: white !important;
 }

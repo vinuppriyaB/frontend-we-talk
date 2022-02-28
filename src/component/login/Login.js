@@ -21,6 +21,9 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
+
+  const users = JSON.parse(localStorage.getItem("userInfo"));
+  console.log(users);
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     if (!userInfo) history.push("/");
@@ -56,7 +59,7 @@ const Login = () => {
       if (res) {
         console.log(res.data);
         localStorage.setItem("userInfo", JSON.stringify(res.data));
-        localStorage.getItem("userInfo");
+
         history.push("/chats");
       }
     } catch (e) {

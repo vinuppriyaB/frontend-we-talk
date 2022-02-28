@@ -4,7 +4,8 @@
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  background-color: thistle;
+  background-color: orangered;
+  color: white;
 }
 .search_wrapper {
   flex: 1;
@@ -14,7 +15,7 @@
 }
 .searchbar {
   width: 60%;
-  height: 30px;
+  height: 35px;
   border: none !important;
   border-radius: 20px;
   margin-right: 5px;
@@ -47,14 +48,20 @@
 .Modal_box {
   display: flex;
   flex-direction: column;
+  /* justify-content: center; */
+  /* align-items: center; */
   background-color: rgb(221, 220, 219);
   gap: 10px;
 }
 .MadalAvatar {
   text-align: center;
-  background-color: thistle !important;
+  /* background-color: thistle !important; */
 }
 .profile_avatar {
-  height: 300px !important;
-  width: 300px !important;
+  height: 30vw !important;
+  width: 30vw !important;
+}
+.profile_buttton {
+  background-color: orangered !important;
+  color: white !important;
 }

@@ -4,6 +4,7 @@ import ChatPage from "./pages/ChatPage";
 
 import Login from "./component/login/Login";
 import Register from "./component/register/Register";
+import ChatProvider from "./Context/chatContext/ChatProvider";
 
 function App() {
   return (
@@ -15,8 +16,11 @@ function App() {
         <Route exact path="/">
           <Login />
         </Route>
+
         <Route exact path="/chats">
-          <ChatPage />
+          <ChatProvider>
+            <ChatPage />
+          </ChatProvider>
         </Route>
       </Switch>
     </div>

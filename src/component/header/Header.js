@@ -22,22 +22,33 @@ import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
 import Modal from "@mui/material/Modal";
 import { useHistory } from "react-router";
 import LoadingButton from "@mui/lab/LoadingButton";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import axios from "axios";
 import { ChatState } from "../../Context/chatContext/ChatProvider";
 
 const Header = () => {
   const history = useHistory();
-
-  const { user, setSelectedChat, selectedChat } = ChatState();
-  const users = JSON.parse(localStorage.getItem("userInfo"));
-
-  const [search, setSearch] = useState();
+  const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState();
   const [loadingChat, setLoadingChat] = useState(false);
   const [loading, setLoading] = useState();
 
-  const [state, setState] = React.useState({
+  const {
+    setSelectedChat,
+    user,
+    setUser,
+    notification,
+    setNotification,
+    chats,
+    setChats,
+  } = ChatState();
+
+  // console.log(ChatState());
+  // console.log(user);
+  // const users = JSON.parse(localStorage.getItem("userInfo"));
+
+  const [state, setState] = useState({
     top: false,
     left: false,
     bottom: false,
@@ -55,8 +66,9 @@ const Header = () => {
     setState({ ...state, [anchor]: open });
   };
 
-  const handleSearch = async (e) => {
-    console.log(user.token);
+  const handleSearch = async (e, search) => {
+    e.preventDefault();
+    console.log(user.token, search);
     const headerdata = {
       headers: {
         token: user.token,
@@ -65,7 +77,7 @@ const Header = () => {
     try {
       setLoading(true);
       const res = await axios.get(
-        `http://localhost:5000/api/user/getuser?search=${user.userName}`,
+        `http://localhost:5000/api/user/getuser?search=${search}`,
         headerdata
       );
       console.log(res.data);
@@ -101,6 +113,7 @@ const Header = () => {
 
   const hangleLogout = () => {
     localStorage.removeItem("userInfo");
+    setUser("");
     history.push("/");
   };
 
@@ -108,21 +121,21 @@ const Header = () => {
     <Box
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 400 }}
       role="presentation"
-
-      // onKeyDown={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        <ListItem>
+        <ListItem onClick={toggleDrawer(anchor, false)}>
+          <ArrowBackIcon />
           <input
             type="text"
             className="searchbar"
-            // onClick={toggleDrawer(anchor, false)}
-            onChange={(e) => setSearch(e.target.values)}
+            onChange={(e) => setSearch(e.target.value)}
           />
           <Button
             variant="outlined"
+            className="profile_buttton"
             onClick={(e) => {
-              handleSearch(e);
+              handleSearch(e, search);
             }}
           >
             search
@@ -135,8 +148,12 @@ const Header = () => {
             <ListItem
               className="sideDraw_listItem"
               button
-              key={user}
-              onClick={() => accessChat(user._id, anchor)}
+              key={user._id}
+              // onClick={toggleDrawer(anchor, false)}
+              onClick={() => {
+                accessChat(user._id, anchor);
+                toggleDrawer(anchor, false);
+              }}
             >
               <ListItemIcon>
                 <Avatar alt="Travis Howard" src={user.pic} />
@@ -151,7 +168,7 @@ const Header = () => {
     </Box>
   );
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -172,7 +189,7 @@ const Header = () => {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 600,
+    maxWidth: "50vw",
     bgcolor: "background.paper",
     border: "none",
     boxShadow: 24,
@@ -184,7 +201,10 @@ const Header = () => {
       <div className="search_wrapper">
         {["left"].map((anchor) => (
           <React.Fragment key={anchor}>
-            <Button onClick={toggleDrawer(anchor, true)}>
+            <Button
+              className="profile_buttton"
+              onClick={toggleDrawer(anchor, true)}
+            >
               <SearchIcon />
               Search User
             </Button>
@@ -201,82 +221,92 @@ const Header = () => {
       <div className="heading_wrapper">
         <h2>WE TALK</h2>
       </div>
-      <div className="profile_wrapper">
-        <Button aria-describedby={id} variant="contained" onClick={handleClick}>
-          <Avatar alt={users.userName} src={users.pic} />
-          <ExpandMoreIcon />
-        </Button>
-        <Popover
-          id={id}
-          open={open}
-          anchorEl={anchorEl}
-          onClose={handleClose}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left",
-          }}
-        >
-          <List
-            sx={{ width: "300px", bgcolor: "background.paper" }}
-            component="nav"
-            aria-labelledby="nested-list-subheader"
+      {user && (
+        <div className="profile_wrapper">
+          <Button
+            className="profile_buttton"
+            aria-describedby={id}
+            variant="contained"
+            onClick={handleClick}
           >
-            <ListItemButton>
-              <ListItemIcon></ListItemIcon>
-              <h3>vinu</h3>
-            </ListItemButton>
-
-            <ListItemButton onClick={() => ModalhandleOpen()}>
-              <ListItemIcon>
-                <AccountBoxOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText primary="Your Profile" />
-            </ListItemButton>
-
-            <ListItemButton onClick={() => hangleLogout()}>
-              <ListItemIcon>
-                <LogoutOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText primary="Log Out" />
-            </ListItemButton>
-          </List>
-        </Popover>
-
-        <Modal
-          open={Open}
-          // onClose={ModalhandleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style} className="Modal_box">
-            <div className="MadalAvatar">
-              <Avatar
-                className="profile_avatar"
-                alt={users.userName}
-                src={users.pic}
-              />
-            </div>
-            <Typography
-              id="modal-modal-title"
-              variant="h4"
-              component="h2"
-              sx={{ mt: 2 }}
+            <Avatar alt={user.userName} src={user.pic} />
+            <ExpandMoreIcon />
+          </Button>
+          <Popover
+            id={id}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+          >
+            <List
+              sx={{ width: "300px", bgcolor: "background.paper" }}
+              component="nav"
+              aria-labelledby="nested-list-subheader"
             >
-              Name: {users.userName}
-            </Typography>
-            <Typography
-              id="modal-modal-description"
-              sx={{ mt: 2, fontSize: "30px" }}
-            >
-              Email: {users.email}
-            </Typography>
-            //{" "}
-            <Button variant="contained" onClick={() => ModalhandleClose}>
-              // close //{" "}
-            </Button>
-          </Box>
-        </Modal>
-      </div>
+              <ListItemButton>
+                <ListItemIcon></ListItemIcon>
+                <h3>{user.userName}</h3>
+              </ListItemButton>
+
+              <ListItemButton onClick={() => ModalhandleOpen()}>
+                <ListItemIcon>
+                  <AccountBoxOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Your Profile" />
+              </ListItemButton>
+
+              <ListItemButton onClick={() => hangleLogout()}>
+                <ListItemIcon>
+                  <LogoutOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Log Out" />
+              </ListItemButton>
+            </List>
+          </Popover>
+
+          <Modal
+            open={Open}
+            onClose={ModalhandleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style} className="Modal_box">
+              <div className="MadalAvatar">
+                <Avatar
+                  className="profile_avatar"
+                  alt={user.userName}
+                  src={user.pic}
+                />
+              </div>
+              <Typography
+                id="modal-modal-title"
+                sx={{ mt: 2, fontSize: "20px" }}
+              >
+                Name: {user.userName}
+              </Typography>
+              <Typography
+                id="modal-modal-description"
+                sx={{ mt: 2, fontSize: "20px" }}
+              >
+                Email: {user.email}
+              </Typography>
+
+              <Button
+                variant="contained"
+                onClick={() => {
+                  ModalhandleClose();
+                }}
+              >
+                close
+              </Button>
+            </Box>
+          </Modal>
+        </div>
+      )}
     </div>
   );
 };
