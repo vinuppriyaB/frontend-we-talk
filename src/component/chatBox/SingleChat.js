@@ -16,8 +16,8 @@ import ScrollableChat from "./ScrollableChat";
 import io from "socket.io-client";
 
 const ENDPOINT = "https://we-talks.herokuapp.com";
-var socket, selectedChatCompare;
-
+var selectedChatCompare;
+var socket = io(ENDPOINT);
 const style = {
   position: "absolute",
   top: "50%",
@@ -31,7 +31,6 @@ const style = {
 };
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
-  socket = io(ENDPOINT);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -58,7 +57,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   useEffect(() => {
     if (user) {
       socket.emit("setup", user);
-      socket.on("connection", () => setSocketConnected(true));
+      socket.on("connected", () => setSocketConnected(true));
     }
   }, []);
   const handleRemoveUser = async (userToRemove) => {
@@ -194,15 +193,18 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     fetchAllMessage();
     selectedChatCompare = selectedChat;
   }, [selectedChat]);
-
   useEffect(() => {
     socket.on("message received", (newMessageReceived) => {
+      console.log(message);
+      console.log(newMessageReceived);
       console.log("newMessageReceived" + newMessageReceived);
       if (
         !selectedChatCompare ||
         selectedChatCompare._id !== newMessageReceived.chat._id
       ) {
       } else {
+        console.log(message);
+        console.log(newMessageReceived);
         setMessage([...message, newMessageReceived]);
       }
     });
@@ -321,7 +323,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           </div>
           <div className="singleChat_bottomContent">
             <div className="scrollchat_area">
-              <ScrollableChat message={message}></ScrollableChat>
+              <ScrollableChat message={message} />
             </div>
 
             <TextField
