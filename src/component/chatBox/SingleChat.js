@@ -15,7 +15,7 @@ import Alert from "@mui/material/Alert";
 import ScrollableChat from "./ScrollableChat";
 import io from "socket.io-client";
 
-const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = "https://we-talks.herokuapp.com";
 var socket, selectedChatCompare;
 
 const style = {
@@ -23,7 +23,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 600,
+  width: 500,
   bgcolor: "background.paper",
   border: "none",
   boxShadow: 24,
@@ -79,7 +79,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     console.log(headerdata, bodydata);
     try {
       const { data } = await axios.put(
-        "http://localhost:5000/api/chat/deletefromgroup",
+        "https://we-talks.herokuapp.com/api/chat/deletefromgroup",
         bodydata,
         headerdata
       );
@@ -108,7 +108,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     console.log(headerdata, bodydata);
     try {
       const { data } = await axios.put(
-        "http://localhost:5000/api/chat/addtogroup",
+        "https://we-talks.herokuapp.com/api/chat/addtogroup",
         bodydata,
         headerdata
       );
@@ -133,7 +133,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     console.log(headerdata, bodydata);
     try {
       const { data } = await axios.put(
-        "http://localhost:5000/api/chat/renamegroup",
+        "https://we-talks.herokuapp.com/api/chat/renamegroup",
         bodydata,
         headerdata
       );
@@ -157,7 +157,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     console.log(headerdata);
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/user/getuser?search=${query}`,
+        `https://we-talks.herokuapp.com/api/user/getuser?search=${query}`,
         headerdata
       );
       console.log(res.data);
@@ -178,7 +178,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     // console.log(headerdata, bodydata);
     try {
       const { data } = await axios.get(
-        `http://localhost:5000/api/message/getallmessage/${selectedChat._id}`,
+        `https://we-talks.herokuapp.com/api/message/getallmessage/${selectedChat._id}`,
         headerdata
       );
 
@@ -223,7 +223,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       console.log(headerdata, bodydata);
       try {
         const { data } = await axios.post(
-          "http://localhost:5000/api/message/createMessage",
+          "https://we-talks.herokuapp.com/api/message/createMessage",
           bodydata,
           headerdata
         );
@@ -265,9 +265,27 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                       id="modal-modal-title"
                       variant="h6"
                       component="h2"
+                      style={{ color: "orangered" }}
                     >
                       {selectedChat.chatName}
                     </Typography>
+
+                    <div className="modal_groupname">
+                      <TextField
+                        id="standard-basic"
+                        label="Rename Group"
+                        variant="standard"
+                        fullWidth
+                        value={groupChatName}
+                        onChange={(e) => setGroupChatName(e.target.value)}
+                      />
+                      <Button
+                        onClick={() => handleRenamechat()}
+                        style={{ color: "orangered" }}
+                      >
+                        update
+                      </Button>
+                    </div>
                     <div className="groupChat_UserList">
                       {selectedChat.users.map((u, index) => (
                         <SelectedGroupUser
@@ -277,17 +295,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                       ))}
                     </div>
 
-                    <div className="modal_groupname">
-                      <TextField
-                        id="standard-basic"
-                        label="Standard"
-                        variant="standard"
-                        fullWidth
-                        value={groupChatName}
-                        onChange={(e) => setGroupChatName(e.target.value)}
-                      />
-                      <Button onClick={() => handleRenamechat()}>update</Button>
-                    </div>
                     <div>
                       <TextField
                         id="standard-basic"

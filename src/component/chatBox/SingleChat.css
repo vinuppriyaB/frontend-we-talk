@@ -43,11 +43,14 @@
 .groupChat_Modal_container {
   display: flex;
   flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
   gap: 30px;
 }
 .groupChat_UserList {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 20px;
 }
 .modal_groupname {
@@ -58,7 +61,7 @@
 }
 
 .scrollchat_area {
-  max-height: 70vh;
+  max-height: 75vh;
 }
 
 .singleChat_bottomContent {

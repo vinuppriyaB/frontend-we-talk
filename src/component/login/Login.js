@@ -51,10 +51,13 @@ const Login = () => {
     };
     console.log(userDetail);
     try {
-      let res = await axios.post("http://localhost:5000/api/user/login", {
-        email: email,
-        password: password,
-      });
+      let res = await axios.post(
+        "https://we-talks.herokuapp.com/api/user/login",
+        {
+          email: email,
+          password: password,
+        }
+      );
       console.log(res);
       if (res) {
         console.log(res.data);

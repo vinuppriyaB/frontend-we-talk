@@ -3,15 +3,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow-wrap: break-word;
+  /* flex-wrap: wrap; */
 
   border-radius: 10px;
   padding: 10px;
+  background-color: orangered;
+  color: white;
 }
 .name_box > p {
   margin: 0px 3px;
+  font-size: 15px;
+  font-weight: bold;
 }
 .closeIcon_style {
-  font-size: 15px;
+  height: 16px !important;
+  width: 16px !important;
   margin: 0px;
 }

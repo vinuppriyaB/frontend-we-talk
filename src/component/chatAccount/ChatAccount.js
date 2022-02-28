@@ -60,7 +60,7 @@ const ChatAccount = ({ fetchAgain }) => {
 
       try {
         const { data } = await axios.get(
-          "http://localhost:5000/api/chat",
+          "https://we-talks.herokuapp.com/api/chat",
           headerdata
         );
         console.log(data);
@@ -86,7 +86,7 @@ const ChatAccount = ({ fetchAgain }) => {
     console.log(headerdata);
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/user/getuser?search=${query}`,
+        `https://we-talks.herokuapp.com/api/user/getuser?search=${query}`,
         headerdata
       );
       console.log(res.data);
@@ -124,7 +124,7 @@ const ChatAccount = ({ fetchAgain }) => {
     // console.log(headerdata, data);
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/chat/creategroup",
+        "https://we-talks.herokuapp.com/api/chat/creategroup",
         bodydata,
         headerdata
       );
@@ -168,7 +168,7 @@ const ChatAccount = ({ fetchAgain }) => {
           >
             <Box sx={style}>
               <div className="createChat_modal">
-                <h2>CREATE GROUP CHAT</h2>
+                <h2 className="modelbtn">CREATE GROUP CHAT</h2>
                 <TextField
                   id="standard-basic"
                   label="ChatName"
@@ -202,8 +202,16 @@ const ChatAccount = ({ fetchAgain }) => {
                       ></ListUser>
                     ))}
                 </div>
-                <div>
-                  <Button onClick={(e) => handleCreateGroup(e)}>create</Button>
+                <div className="createGroupModel_btn">
+                  <Button
+                    className="modelbtn"
+                    onClick={(e) => handleCreateGroup(e)}
+                  >
+                    create
+                  </Button>
+                  <Button className="modelbtn" onClick={(e) => handleClose(e)}>
+                    close
+                  </Button>
                 </div>
               </div>
             </Box>

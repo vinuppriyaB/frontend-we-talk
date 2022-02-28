@@ -28,3 +28,12 @@
   background-color: orangered !important;
   color: white !important;
 }
+.createGroupModel_btn {
+  margin: 0px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modelbtn {
+  color: orangered !important;
+}

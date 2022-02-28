@@ -77,7 +77,7 @@ const Header = () => {
     try {
       setLoading(true);
       const res = await axios.get(
-        `http://localhost:5000/api/user/getuser?search=${search}`,
+        `https://we-talks.herokuapp.com/api/user/getuser?search=${search}`,
         headerdata
       );
       console.log(res.data);
@@ -99,7 +99,7 @@ const Header = () => {
     };
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/chat",
+        "https://we-talks.herokuapp.com/api/chat",
         data,
         headerdata
       );

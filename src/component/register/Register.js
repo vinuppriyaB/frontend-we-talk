@@ -64,12 +64,15 @@ const Register = () => {
       password: password,
     };
     try {
-      let res = await axios.post("http://localhost:5000/api/user/register", {
-        userName: name,
-        email: email,
-        password: password,
-        password: password,
-      });
+      let res = await axios.post(
+        "https://we-talks.herokuapp.com/api/user/register",
+        {
+          userName: name,
+          email: email,
+          password: password,
+          password: password,
+        }
+      );
       console.log(res);
       if (res) {
         console.log(res.data);
