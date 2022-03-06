@@ -81,9 +81,10 @@ const Login = () => {
           height: "5vh",
           margin: "10px",
           padding: "15px",
+          textAlign: "center",
         }}
       >
-        WE CHAT
+        <h2>WE TALK</h2>
       </Box>
       <Box
         className="Login_fields"
@@ -127,6 +128,12 @@ const Login = () => {
             label="Password"
           />
         </FormControl>
+        <div>
+          No Account?
+          <Button variant="text" onClick={(e) => history.push("/register")}>
+            Create Account
+          </Button>
+        </div>
         <Button variant="contained" onClick={(e) => handleSubmission(e)}>
           Login
         </Button>

@@ -291,6 +291,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                       {selectedChat.users.map((u, index) => (
                         <SelectedGroupUser
                           user={u}
+                          key={index}
                           handleFunction={(user) => handleRemoveUser(user)}
                         />
                       ))}

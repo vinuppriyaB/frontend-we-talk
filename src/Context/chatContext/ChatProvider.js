@@ -16,7 +16,7 @@ const ChatProvider = ({ children }) => {
     setUser(userInfo);
     console.log(user);
     if (!userInfo) history.push("/");
-  }, [history, ChatState]);
+  }, [ChatState]);
 
   return (
     <ChatContext.Provider

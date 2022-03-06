@@ -27,7 +27,6 @@ const Register = () => {
   const history = useHistory();
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    if (!userInfo) history.push("/");
   }, [history]);
 
   const [values, setValues] = useState({
@@ -70,7 +69,6 @@ const Register = () => {
           userName: name,
           email: email,
           password: password,
-          password: password,
         }
       );
       console.log(res);
@@ -83,7 +81,6 @@ const Register = () => {
     } catch (e) {
       console.log(e);
     }
-    console.log(userDetail);
   };
 
   return (
@@ -98,9 +95,10 @@ const Register = () => {
           height: "5vh",
           margin: "10px",
           padding: "15px",
+          textAlign: "center",
         }}
       >
-        <h1>WE CHAT</h1>
+        <h1>WE TALK</h1>
       </Box>
       <Box
         className="Login_fields"
@@ -180,7 +178,11 @@ const Register = () => {
             label="Confirm Password *"
           />
         </FormControl>
-
+        <div>
+          <Button variant="text" onClick={(e) => history.push("/")}>
+            Have Account
+          </Button>
+        </div>
         <Button variant="contained" onClick={(e) => handleSubmission(e)}>
           Register
         </Button>
